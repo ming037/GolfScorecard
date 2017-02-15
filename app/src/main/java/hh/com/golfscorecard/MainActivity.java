@@ -1,12 +1,14 @@
 package hh.com.golfscorecard;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ListActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ListActivity {
 
 
     private Hole[] mHoles = new Hole[18];
+    private ListAdapter mListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0 ; i< mHoles.length ;i++) {
             mHoles[i] = new Hole("Hole" + (i + 1) + " :", 0);
         }
+
+        mListAdapter = new ListAdapter(this, mHoles);
+        setListAdapter(mListAdapter);
 
     }
 }
