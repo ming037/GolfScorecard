@@ -1,19 +1,20 @@
 package hh.com.golfscorecard;
 
-/**
- * Created by Administrator on 2017-02-16.
- */
-
 public class Hole {
-    private String mLable;
+    private String mLabel;
     private int mStrokeCount;
 
-    public String getLable() {
-        return mLable;
+    public Hole (String label, int strokeCount) {
+        mLabel = label;
+        mStrokeCount = strokeCount;
     }
 
-    public void setLable(String lable) {
-        mLable = lable;
+    public String getLabel() {
+        return mLabel;
+    }
+
+    public void setLabel(String label) {
+        mLabel = label;
     }
 
     public int getStrokeCount() {
@@ -22,12 +23,5 @@ public class Hole {
 
     public void setStrokeCount(int strokeCount) {
         mStrokeCount = strokeCount;
-    }
-
-    public Hole(String lable, int strokeCount)
-    {
-        mLable = lable;
-        mStrokeCount = strokeCount;
-
     }
 }

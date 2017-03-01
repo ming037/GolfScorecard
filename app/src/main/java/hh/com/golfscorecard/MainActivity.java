@@ -3,49 +3,43 @@ package hh.com.golfscorecard;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends ListActivity {
-
-
-    private static final String PREFS_FILE = "hh.com.golfscorecard.preferences";
-    private static final String KEY_STROKEDCOUNT = "key_strokecount" ;
-    private Hole[] mHoles = new Hole[18];
-    private ListAdapter mListAdapter;
-
+    private static final String PREFS_FILE = "com.teamtreehouse.golfscorecard.preferences";
+    private static final String KEY_STROKECOUNT = "key_strokecount";
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+    private Hole[] mHoles = new Hole[18];
+    private ListAdapter mListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Initialize SharedPreferences
-        mSharedPreferences =  getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
 
-        //Initialize holes
+        // Initialize holes
         int strokes = 0;
-        for(int i=0 ; i< mHoles.length ;i++) {
-            strokes = mSharedPreferences.getInt(KEY_STROKEDCOUNT+i, 0);
-            mHoles[i] = new Hole("Hole" + (i + 1) + " :", strokes);
+        for (int i = 0; i < mHoles.length; i++) {
+            strokes = mSharedPreferences.getInt(KEY_STROKECOUNT + i, 0);
+            mHoles[i] = new Hole("Hole " + (i + 1) + " :", strokes);
         }
 
         mListAdapter = new ListAdapter(this, mHoles);
         setListAdapter(mListAdapter);
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        for(int i=0; i<mHoles.length ;i++)
-        {
-            mEditor.putInt(KEY_STROKEDCOUNT+i, mHoles[i].getStrokeCount());
+        for (int i = 0; i < mHoles.length; i++) {
+            mEditor.putInt(KEY_STROKECOUNT + i, mHoles[i].getStrokeCount());
         }
         mEditor.apply();
     }
@@ -66,18 +60,14 @@ public class MainActivity extends ListActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_clear_strokes) {
-            //remove all SharedPreferences
             mEditor.clear();
             mEditor.apply();
 
-            for(Hole hole: mHoles)
-            {
+            for (Hole hole: mHoles) {
                 hole.setStrokeCount(0);
             }
-
             mListAdapter.notifyDataSetChanged();
-            //이거 없으면 clear버튼 눌렀을 때 데이터는 초기화 되지만
-            //화면에는 초기화 되지 않음
+
             return true;
         }
 
